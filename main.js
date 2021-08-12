@@ -268,7 +268,7 @@ let timer = {
 
 	// definition of inner values
 	milsec: 0,
-	sec: 45,
+	sec: 0,
 	min: 0,
 	h: 0,
 	overallMinutes: 0,

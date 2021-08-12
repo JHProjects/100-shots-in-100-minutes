@@ -151,14 +151,19 @@ main {
 	line-height: initial;
 	font-size: min(max(13px, 0.9vw), 15px);
 	margin-top: 0;
+	transition: height 0.5s
 }
 
 p.info, #cz, #en {
 	text-transform: uppercase;
 	font-weight: 1000;
-	line-height: 0.0em;
+	line-height: 103%;
 	cursor: pointer;
-	transition: 0.8s;
+	margin: 0;
+	transition: 
+		font-size 0.5s,
+		color .5s,
+		margin-bottom .5s;
 }
 
 p.info:hover, #cz:hover, #en:hover {
@@ -169,7 +174,7 @@ p.info:hover, #cz:hover, #en:hover {
 p.language {
 	text-transform: uppercase;
 	font-weight: 1000;
-	line-height: 0.0em;
+	line-height: 100%;
 	margin: 8px 0;
 }
 
