@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta >
+	<meta name="author" content="Ian Ducklink">
+	<meta charset="utf-8">
+	<meta name="description" content="Lick my ass, I'll push some gas.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>100 / 100 GAME</title>
+	<link rel="icon" href="./icon.png">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="https://use.typekit.net/wwh7vhw.css">
+</head>
+<body>
+
+		<!-- || Header area || -->
+		<header>
+
+			<div id="logo">
+				<img src="./IMG/logo/logo.png" alt="logo">
+				<img src="./IMG/logo/logo_pixelated.png" alt="logo-pixel">
+			</div>
+
+			<div id="title">
+				<h1 class="uppercase black"><span class="red italic black">100</span> panáků za <span class="blue italic black">100</span> minut .com</h1>
+				<h3 class="uppercase">by <a class="link" target="_blank" href="https://www.instagram.com/drunkboiiis/">drunkbois</a></h3>
+			</div>
+
+			<div id="offhand-timer" class="">
+				<p id="offhand-timer-clock" class=""><span id="offhand-minutes" class="offhand-timer-numbers">00</span>:<span id="offhand-seconds" class="offhand-timer-numbers">00</span></p>
+				<p class="italic spacing-0-03">> <span id="offhand-next-rounds">0</span></p>
+			</div>
+		</header>
+
+		<div id="buffer"></div>
+
+		<!-- || MAIN AREA || -->
+		<main>
+
+		<!-- Left sidebar -->
+		<div class="sidebar-left--info" id="info-panel">
+			<p class="info about">About &#9658;</p>
+			<p class="content hide">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod <br></p>
+			<p class="info rules">Rules &#9658;</p>
+			<p class="content hide">If you don't get the rules you REALLY shouldn't play this game... You are either very underage or just rertarded (and in any case alcohol isn't very good for you). <br>—<br>Anyhow... It's really simple: Every 60 seconds you pour yourself a shot of (any) beer (20–60 ml) and gulp it down just as 59 changes to 0. The official challange is to get to 100 minutes (1h and 40min). If you want to destroy yourself, you can push even further. <br></p>
+
+			<p class="info">Drunkbois &#9658;</p>
+			<p class="content hide">Drunkbois is a organization of people with similar interests and idealogies (otherwise known as "friends"). Started as a small group of a 4 elementary school friends. Over time, as they met more and more people, they recruited some of The chosen ones to the group. At this poin the organization is so fed up with alcohol, that it has to come up with retarded games to somehow force themself into drinking (it's our job).<br></p>
+
+			<p class="info" id="fyi">fyi &#9658;</p>
+			<p class="content hide" id="">For the love of God... don't refresh the page! It does not save any data! <br></p>
+
+			<p class="language"><span id="cz" class="info">cz </span>/<span id="en" class="info"> en</span></p>
+			
+		</div>
+			
+		<!-- Right sidebar -->
+		<div class="sidebar-right--icons">
+			<a target="_blank" href="https://www.youtube.com/channel/UCcPz82nNxD7uX800ZFEJh1w"><img src="./IMG/social-icons/youtube-square-brands.svg"></a>
+			<a target="_blank" href="https://www.instagram.com/drunkboiiis/"><img src="./IMG/social-icons/instagram-brands.svg"></a>
+			<a target="_blank" href="https://www.twitch.tv/"><img src="./IMG/social-icons/twitch-brands.svg"></a>
+			<a target="_blank" href="https://github.com/JanHolecekProjects"><img src="./IMG/social-icons/github-square-brands.svg"></a>
+		</div>
+
+		<!-- Main Timer -->
+		<div id="main-timer">
+			<p>
+				<span id="minutes">00</span><span>:</span><span id="seconds">00</span><span>&hairsp;</span><span id="milliseconds">00</span>
+			</p>
+		</div>
+
+		<!-- Loading area -->
+		<div id="loading">
+			<p id="current-round-p">Current round: <span id="current-round">0</span></p>
+			<p id="next-round-p"><span id="current-round-big" class="black">0</span> >>> <span id="next-round-big" class="black italic">?</span></p>
+			<div id="loading-bar" class="loading-bar">
+				<div id="loading-inner" class="loading-inner"></div>
+				<p class="loading-bar-text">Stopped</p>
+			</div>
+		</div>
+
+		<!-- Statistics area -->
+		<div id="stats">
+			<div id="total-time-v-lihu">
+				<p>Už chlastáte: <span class="black" id="overview-timer">0s!</span></p>
+			</div>
+			<p id="beer-drank">Piv vypito na osobu / Celkem: <span>0.0 / 0.0!</span></p>
+			<p id="shots-drank">Složeno panáků celkem: <span>0!</span></p>
+
+			<div class="buttons">
+				<button id="" class="uppercase black start-button start-button--avalible">Start</button>
+				<button id="" class="font-condens uppercase black stop-button">emergency stop!</button>
+			</div>
+		</div>
+
+		<!-- Players area -->
+		<div id="players">
+			<div id="add-player" onclick="openPlayerOverlay()"><img src="IMG/plus.svg" title="Add new player!"><!-- <span>ADD</span><span>PLAYER</span>--></div>
+
+		</div>
+
+		</main>
+
+		<!-- || Galerry area || -->
+		<section class="gallery-section">
+			
+		</section>
+
+		<section class="audio-section">
+			<audio autoplay class="audio">
+				
+			Your Browser does not support the audio element :(
+			</audio>
+		</section>
+
+		<div class="overlay-container" id="overlay-container">
+			<div class="choose" id="choose" onclick="updateNewCharacterView()">
+				<div class="close-button" id="close-overlay-btn" onclick="closeOverlay()">
+					<img class="x-icon" src="IMG/x-symbol.svg">
+				</div>
+
+				<p class="overlay-title">Add new player:</p>
+					<div class="choose-content">
+						<div class="inputs">
+
+							<p class="uppercase black">Describe yourself, please</p>
+							<input id="name" type="text" placeholder="Your name/alias">
+							<input id="weight" type="number" placeholder="Weight in kg">
+							<input id="alc" type="number" placeholder="Alcohol % of the beer">
+							<input id="amount" type="number" placeholder="Shot glass amount in 'ml'">
+							<label for="gender">Gender</label>
+							<select id="gender" name="gender">
+								<option value=".68">male</option>
+							 	<option value=".55">female</option>
+							</select>
+
+							<span class="beer-dropdown">
+							<label for="beers">Fav&nbsp;beer</label>
+							<select id="fav-beer" name="beers">
+								<option value="(ALL)">(všechny)</option>
+							 	<option value="Bráník">Bráník</option>
+							 	<option value="Svijany">Svijany</option>
+							 	<option value="Argus">Argus</option>
+							 	<option value="Chotěboř">Chotěboř</option>
+							</select>
+							</span>
+						</div>
+						
+						<div class="choose-champion">
+							<p class="uppercase black">Choose your champion!</p>
+							<button class="open-champ-btn" id="open-champ-btn" onclick="insertChampions()">Open dropdown</button>
+							<div class="champions-grid" id="champions-grid" data-state="closed"></div>
+						</div>	
+
+						<div class="character-view">
+							<p class="black blue uppercase italic">Your new character:</p>
+							<p class="name">name: <span class="name-value">(undefined)</span></p>
+							<img class="img-value" src="" alt="(your-character's-avatar)">
+							<p class="alias">alias: <span class="alias-value">(undefined)</span></p>
+							<p class="">weight: <span class="weight-value">(undefined)</span><span> kg</span></p>
+							<p class="">beer alc.: <span class="alc-value">(undefined)</span><span> %.alc</span></p>
+							<p class="">shot size: <span class="amount-value">(undefined)</span><span> ml</span></p>
+							<p class="">favourite beer: <span class="fav-beer-value">(undefined)</span></p>
+						</div>
+
+						<div class="bottom-btns">
+							<button class="confirm" onclick="createNewPlayer()">Confirm</button>
+							<button class="cancel" id="cancel-btn" onclick="closeOverlay()">Cancel</button>
+						</div>
+				</div>
+
+			</div>
+		</div>
+
+
+		<!-- || Footer area || -->
+		<footer>
+			<p>© 2021 / Created by Jan Holeček</p>
+			<p>hosted by GitHub Pages</p>
+		</footer>
+
+
+
+	<script type="text/javascript" src="main.js"></script>
+</body>
+</html>
