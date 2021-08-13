@@ -708,6 +708,7 @@ function resetEvent() {
 	timer.stopButton.innerHTML = `emergency stop!`
 	timer.stopButton.classList.remove("stop-button--active")
 	timer.UI.classList.remove("animation-pulsate")
+	timer.offhandTimer.classList.remove("animation-pulsate")
 
 	timer.loadingBar.classList.remove("animation-pulsate")
 	timer.loadingInner.style.width = `${(100 / 60) * (timer.sec)}%`

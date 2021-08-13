@@ -134,7 +134,7 @@ main {
 	margin-top: min(15px, 2vw);
 	display: grid;
 	grid-template-columns: 9vw repeat(7, 1fr) 9vw;
-	grid-template-rows: min(max(100px, 15vw), 280px) auto auto auto;
+	grid-template-rows: min(max(100px, 14vw), 290px) auto auto auto;
 }
 
 /* Left sidebar info */
