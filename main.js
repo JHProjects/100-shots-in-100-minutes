@@ -455,6 +455,7 @@ function createNewPlayer() {
 		amount: inputs.amount.value,
 		genderIndex: inputs.gender.value,
 		favBeer: inputs.favBeer.value,
+		playerArrayIndex: players.length,
 		log: (e) => {console.log(this)},
 		totalShots: 0,
 		totalAmount: 0,
@@ -465,7 +466,7 @@ function createNewPlayer() {
 		element: ``,
 		updateHTML: function() {
 			this.element = `
-				<div class="player" id="player" onclick="this.remove()">
+				<div class="player" id="player" data-index="${this.playerArrayIndex}"" onclick="removePlayer(this)">
 					<img src="${champions[this.championID].avatarURL}" title="${this.name}" alt="${champions[this.championID].name}">
 					<p class="description">
 					<span class="player-name">${this.name}</span><br>
@@ -494,6 +495,20 @@ function createNewPlayer() {
 	closeOverlay()
 	newPlayer.pasteHTML()
 	clearNewCharacterViewAndInputs()
+}
+
+
+function removePlayer(playerDOM) {
+	let id = playerDOM.dataset.index
+	playerDOM.parentNode.childNodes.forEach(x => {
+		if (x.dataset) {
+			if (x.dataset.index > id + 3) {x.dataset.index -= 1}
+		}
+	})
+	console.log(`removed player: #${id}`)
+	playerDOM.remove()
+	players.splice(id, 1)
+	console.log(players)
 }
 
 
