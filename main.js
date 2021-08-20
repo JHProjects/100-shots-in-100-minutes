@@ -27,12 +27,12 @@ let champions = [
 		used: false,
 	},
 	{
-		name: "Sunflower",
+		name: "Memeflower",
 		avatarURL: "IMG/avatars/6.png",
 		used: false,
 	},
 	{
-		name: "A very sexy DJ",
+		name: "Always keep it 69",
 		avatarURL: "IMG/avatars/7.png",
 		used: false,
 	},
@@ -461,19 +461,22 @@ function createNewPlayer() {
 		totalAmount: 0,
 		BAC: 0,
 		alcInBlood: 0,
-		obligation: 0,
 		queue: 0,
 		element: ``,
 		updateHTML: function() {
 			this.element = `
-				<div class="player" id="player" data-index="${this.playerArrayIndex}"" onclick="removePlayer(this)">
+				<div class="player" id="player" data-index="${this.playerArrayIndex}">
+					<div class="player-control">
+						<button class="add-obligation" onclick="addObligation(this.parentNode.parentNode)" title="Add 1 missed shot">+1 queue</button>
+						<img src="IMG/x-symbol.svg" class="delete-player" onclick="removePlayer(this.parentNode.parentNode)" title="Click to remove '${this.name}'">
+					</div>
 					<img src="${champions[this.championID].avatarURL}" title="${this.name}" alt="${champions[this.championID].name}">
 					<p class="description">
 					<span class="player-name">${this.name}</span><br>
 					<span>"${champions[this.championID].name}"</span><br>
 					total: <span>${this.totalShots} s /&nbsp;${Math.round(((this.totalAmount) * 100) / 100) / 1000}&nbsp;l</span><br>
 					blood alc.: <span>${Math.round(this.BAC * 1000) / 1000}&nbsp;&percnt;</span><br>
-					in queue: <span>${this.queue} shots</span><br>
+					in queue: <span  style="color: ${this.queue ? "red" : "black"}">${this.queue} shot${this.queue == 1 ? "" : "s"}</span><br>
 					</p>
 				</div>`
 		},
@@ -500,6 +503,8 @@ function createNewPlayer() {
 
 function removePlayer(playerDOM) {
 	let id = playerDOM.dataset.index
+	let p = players[id]
+	
 	playerDOM.parentNode.childNodes.forEach(x => {
 		if (x.dataset) {
 			if (x.dataset.index > id + 3) {x.dataset.index -= 1}
@@ -508,8 +513,34 @@ function removePlayer(playerDOM) {
 	console.log(`removed player: #${id}`)
 	playerDOM.remove()
 	players.splice(id, 1)
+	champions[p.championID].used = false
 	console.log(players)
 }
+
+function addObligation(playerDOM) {
+	let id = playerDOM.dataset.index
+
+	playerDOM.remove()
+	players[id].queue += 1
+	players[id].updateHTML()
+	players[id].pasteHTML()
+	console.log(`adding 1 missed shot to player #${id}`)
+	console.log(players[id])
+}
+
+function removeObligation(playerDOM) {
+	// Work in progress
+	let id = playerDOM.dataset.index
+
+	playerDOM.remove()
+	players[id].queue += 1
+	players[id].updateHTML()
+	players[id].pasteHTML()
+	console.log(`adding 1 missed shot to player #${id}`)
+	console.log(players[id])
+}
+
+
 
 
 

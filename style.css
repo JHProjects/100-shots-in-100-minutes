@@ -331,32 +331,78 @@ span#milliseconds  {
 	align-self: center;
 
 	height: min(max(180px, 17vw), 23vh);
-
 	display: flex;
+
+	gap: 11px;
 	align-items: flex-end;
 	flex-direction: row-reverse;
 }
 
-#players div {
+#players > div {
 	border-radius: min(max(4px, 0.3vw), 10px);
-	margin: 5px;
-	width: min(max(60px, 9vw), 140px);
+	width: clamp(80px, 9.5vw, 140px);
 	aspect-ratio: 1/1;
 }
 
 .player {
 	width: 100%;
 	transition: .5s;
-	cursor: pointer;
 }
 .player:hover {
 	transform: scale(1.08);
 }
-.player img {
+
+.player-control {
+	position: relative;
+	margin: 0;
+	width: 100%;
+	height: auto;
+	display: flex;
+	gap: .5rem;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.player-control > * {
+	cursor: pointer;
+	border-radius: clamp(3px, .2vw, 8px);
+	height: 1.3rem;
+	margin: .23rem 0;
+	transition: 0.4s;
+	text-transform: uppercase;
+	font-style: italic;
+	font-weight: 1000;
+	font-family: aktiv-grotesk-condensed, aktiv-grotesk, sans-serif;
+	letter-spacing: .05em;
+	line-height: initial;
+}
+
+.player-control > *:hover {
+	transform: scale(1.12);
+}
+
+.add-obligation {
+	border: none;
+	flex-grow: 1;
+	border: 1px solid black;
+}
+
+.delete-player {
+	color: #00F;
+	aspect-ratio: 1/1;
+}
+
+.delete-player:hover {
+	transform: scale(1.2);
+}
+
+.player > img {
 	width: 100%;
 	border-radius: min(max(4px, 0.3vw), 10px);
 	border: 1px solid black;
 }
+
 .description {
 	margin-top: 7px;
 	font-family: aktiv-grotesk-condensed, aktiv-grotesk, sans-serif;
@@ -639,6 +685,13 @@ footer {
 	font-size: min(max(9px, 1vw), 11px);
 	color: #AAA;
 }
+
+
+
+/* || MEDIA QUERIES || */
+
+
+
 
 
 /* prefixes for JS */
