@@ -330,42 +330,7 @@ let timer = {
 	}
 }
 
-window.addEventListener("resize", e => {
-
-	let t = timer
-	if (window.innerWidth < 760) {
-		t.offhandTimer = document.querySelector(".mobile-footer #offhand-timer-clock")
-		t.offhandMin = document.querySelector(".mobile-footer #offhand-minutes")
-		t.offhandSec = document.querySelector(".mobile-footer #offhand-seconds")
-		t.offhandNextRound = document.querySelector(".mobile-footer #offhand-next-rounds")
-		t.loadingBar = document.querySelector(".mobile-loading #loading-bar")
-		t.loadingBarText = document.querySelector(".mobile-loading #loading-bar p")
-		t.loadingInner = document.querySelector(".mobile-loading #loading-inner")
-		infoPanel.panel.childNodes.forEach(e => {
-			if (e.tagName == "P") {
-				let name = e.innerHTML.split(" ")[0]
-				if (e.classList.contains("info")) {e.innerHTML = name}
-			}
-			
-		})
-	} else {
-		t.offhandTimer = document.querySelector("#offhand-timer-clock")
-		t.offhandMin = document.querySelector("#offhand-minutes")
-		t.offhandSec = document.querySelector("#offhand-seconds")
-		t.offhandNextRound = document.querySelector("#offhand-next-rounds")
-		t.loadingBar = document.querySelector(".mobile-loading #loading-bar")
-		t.loadingBarText = document.querySelector(".mobile-loading #loading-bar p")
-		t.loadingInner = document.querySelector(".mobile-loading #loading-inner")
-		infoPanel.panel.childNodes.forEach(e => {
-			if (e.tagName == "P") {
-				let name = e.innerHTML.split(" ")[0]
-				if (e.classList.contains("info")) {e.innerHTML = `${name} &#9658;`}
-			}
-			
-		})
-	}
-})
-
+window.addEventListener("resize", e => mobileVersionChange(e))
 timer.startButton.addEventListener("click", timer.startUpMethod)
 
 // total stats for all
@@ -718,7 +683,7 @@ function changeTimer(e) {
 		// Update the group stats
 		if (timer.sec == 0) totalStats.compile()
 		if (timer.sec == 1) timer.totalShotsAll.innerHTML = `${totalStats.shotsAll}!`
-		if (timer.sec == 1) timer.totalBeerAll.innerHTML = `${Math.round(totalStats.beerPerPerson * 100) / 100} / ${(totalStats.beerAll)}!`
+		if (timer.sec == 1) timer.totalBeerAll.innerHTML = `${Math.round(totalStats.beerPerPerson * 100) / 100}&nbsp;/&nbsp;${(totalStats.beerAll)}!`
 	}
 } 
 
@@ -820,14 +785,41 @@ function checkForDivision(number, divider) {
 	}
 }
 
+function mobileVersionChange(e) {
+	let t = timer
+	if (window.innerWidth < 760) {
+		t.offhandTimer = document.querySelector(".mobile-footer #offhand-timer-clock")
+		t.offhandMin = document.querySelector(".mobile-footer #offhand-minutes")
+		t.offhandSec = document.querySelector(".mobile-footer #offhand-seconds")
+		t.offhandNextRound = document.querySelector(".mobile-footer #offhand-next-rounds")
+		t.loadingBar = document.querySelector("#loading-bar-mobile")
+		t.loadingBarText = document.querySelector("#loading-bar-text-mobile")
+		t.loadingInner = document.querySelector("#loading-inner-mobile")
+		infoPanel.panel.childNodes.forEach(e => {
+			if (e.tagName == "P") {
+				let name = e.innerHTML.split(" ")[0]
+				if (e.classList.contains("info")) {e.innerHTML = name}
+			}
+			
+		})
+	} else {
+		t.offhandTimer = document.querySelector("#offhand-timer-clock")
+		t.offhandMin = document.querySelector("#offhand-minutes")
+		t.offhandSec = document.querySelector("#offhand-seconds")
+		t.offhandNextRound = document.querySelector("#offhand-next-rounds")
+		t.loadingBar = document.querySelector("#loading-bar")
+		t.loadingBarText = document.querySelector("#loading-bar p")
+		t.loadingInner = document.querySelector("#loading-inner")
+		infoPanel.panel.childNodes.forEach(e => {
+			if (e.tagName == "P") {
+				let name = e.innerHTML.split(" ")[0]
+				if (e.classList.contains("info")) {e.innerHTML = `${name} &#9658;`}
+			}
+			
+		})
+	}
+}
 
 
 // things to definetly write after all the declarations
-if (window.innerWidth < 760) {
-	infoPanel.panel.childNodes.forEach(e => {
-		if (e.tagName == "P") {
-			let name = e.innerHTML.split(" ")[0]
-			if (e.classList.contains("info")) {e.innerHTML = name}
-		}
-	}
-)}
+mobileVersionChange()

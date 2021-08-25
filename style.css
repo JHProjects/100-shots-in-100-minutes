@@ -231,7 +231,7 @@ span#milliseconds  {
 
 /* Loading area */
 #loading {
-	grid-row: 3;
+	grid-row: 3 / 5;
 	grid-column: 3 / 6;
 
 	display: grid;
@@ -294,10 +294,16 @@ span#milliseconds  {
 
 
 /* Statstics area */
-#stats {
-	grid-row: 3;
+.stats {
+	grid-row: 3 / 4;
 	grid-column: 6 / -1;
 	align-self: end;
+}
+
+/* Button area */
+.button-area {
+	grid-row: 4 / 5;
+	grid-column: 6 / -1;
 }
 
 .start-button, .stop-button {
@@ -322,13 +328,9 @@ span#milliseconds  {
 }
 
 
-#overwiew-timer {
-
-}
-
 /* Player area */
 #players {
-	grid-row: 4;
+	grid-row: 5;
 	grid-column: 2 / 9;
 	justify-self: center;
 	align-self: center;
@@ -676,6 +678,11 @@ span#milliseconds  {
 
 
 /* || FOOTER AREA || */
+.mobile-buffer {
+	display: none;
+}
+
+
 footer {
 	position: fixed;
 	bottom: 0;
@@ -833,30 +840,167 @@ footer {
 	main {
 		display: flex;	
 		flex-direction: column;
+		gap: .5rem;
 	}
 
 	.sidebar-left--info {
 		display: flex;
-		padding: .4rem .6rem .35rem .6rem;
+		padding: .4rem .4rem .35rem .4rem;
+		margin: 0;
 		justify-content: space-between;
 		border: 1px solid black;
 		border-radius: .3rem;
-		width: auto;
 		max-width: none;
 		flex-wrap: wrap;
+		order: 1;
+
 	}
 
-	.sidebar-left--info > .info{
+	.sidebar-left--info > .info {
 		margin: 0 .3rem;
+		font-size: clamp(.85rem,3vw, 1.05rem);
 	}
 
 	.language {display: none}
 
 	.sidebar-right--icons {
+		display: none;
+		flex-direction: row;
+		justify-content: space-around;
+		gap: .5rem;
+		justify-items: center;
+		min-height: 2rem;
+		width: 100%;
+		margin: 0 auto;
+	}
+
+	.sidebar-right--icons a {
+		width: 2rem;
+	}
+
+	.sidebar-right--icons a:nth-child(3) {
+		margin-top: 3px;
+		transform: scale(1.05);
+	}
+
+	.stats {
+		border: 1px solid black;
+		border-radius: .3rem;
+		padding: .4rem .65rem;
+		align-self: initial;
+		order: 2;
+		max-width: none;
+
+	}
+
+	.stats p {
+		display: block;
+		margin: .1rem 0;
+		font-size: clamp(.93rem, 2.8vw, 1.05rem);
+		line-height: initial;
+	}
+
+	#main-timer {
+		order: 3;
+		align-self: center;
+		height: 35vw;
+		min-height: 10vh;
+		max-height: 200px;
+		display: flex;
+		align-items: end;
+	}
+
+	#main-timer p {
+		margin: 0;
+	}
+
+	#main-timer span {
+		font-size: clamp(2rem, 32vw, 12rem);
 		
 	}
 
+	#main-timer span#milliseconds {
+		font-size: clamp(1rem, 13vw, 7rem);
+		font-family: aktiv-grotesk-condensed, sans-serif;
+	}
+
+	.button-area {
+		order: 4;
+		margin: 0 .3rem;
+		margin-top: .6rem;
+	}
+
+	.buttons {
+		display: flex;
+		gap: .3rem;
+	}
+
+	.buttons button {
+		flex: 1;
+		margin: 0;
+		height: clamp(1.9rem, 6vw, 3rem);
+		font-size: clamp(.9rem, 1vw, 2rem);
+	}
+
+	#players {
+		order: 5;
+		min-height: min(max(170px, 18vw), 21vh);
+		display: flex;
+		gap: 6rem .55rem;
+		justify-content: center;
+		flex-wrap: wrap;
+		width: 100%;
+		margin-bottom: 20rem;
+	}
+
+	#players div {
+		max-width: 120px;
+		min-width: 95px;
+		flex: 1;
+	}
+
+	.player {
+	}
+
+	.description {
+		width: 100%;
+	}
+
+	.player-control > * {
+		letter-spacing: 0;
+	}
+
 	#loading {display: none;}
+
+	.inputs {
+		display: flex;
+		justify-items: space-between;
+		gap: .1rem .4rem;
+		flex-wrap: wrap;
+	}
+
+	.inputs p {
+		width: 100%;
+		margin: 5px 0 0 0;
+		line-height: initial;
+	}
+
+	.inputs input {
+		flex: 1 1;
+		min-width: 170px;
+	}
+
+	.champions-grid {
+		grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+		gap: .5rem;
+	}
+
+	.mobile-buffer {
+		background: pink;
+		display: block;
+		height: clamp(1rem, 4vw, 3rem);
+		width: 100%;
+	}
 
 	footer > p {
 		display: none;
@@ -864,7 +1008,35 @@ footer {
 	}
 
 	.mobile-footer {
+		background: white;
 		display: flex;
 		flex-direction: column;
+		width: 100%;
+		padding-bottom: .78rem;
+		align-items: initial;
+		min-height: clamp(1rem, 4vw, 3rem);
+	}
+
+	.mobile-timer {
+		margin: 0;
+		font-size: clamp(1.5rem, 5vw, 2.5rem);
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: space-between;
+	}
+
+	#offhand-timer-clock	{
+		font-family: aktiv-grotesk, Arial, sans-serif;
+	}
+
+	.mobile-timer p {
+		color: black;
+		padding: 0;
+		margin: 0;
+		line-height: initial;
+	}
+
+	.mobile-loading, .loading-bar {
+		width: auto;
 	}
 }
