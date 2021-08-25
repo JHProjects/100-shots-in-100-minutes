@@ -132,7 +132,7 @@ let champions = [
 		used: false,
 	},
 	{
-		name: "Agent 007",
+		name: "K.G.B.",
 		avatarURL: "IMG/avatars/27.png",
 		used: false,
 	},
@@ -229,6 +229,7 @@ let soundEfects = [
 // Info side panel code (to open and close info)
 let infoPanel = {
 	panel: document.querySelector("#info-panel"),
+	allSections: document.getElementsByClassName("info") 
 }
 
 infoPanel.panel.addEventListener("click", (e) => {
@@ -243,7 +244,8 @@ infoPanel.panel.addEventListener("click", (e) => {
 		} else {
 			sibling.classList.add("hide")
 			target.classList.remove("margin-bottom--7")
-			target.innerHTML = `${targetName} &#9658;`
+			if (window.innerWidth < 760) {e.b = ""} else {e.b = "&#9658;"}
+			target.innerHTML = `${targetName} ${e.b}`
 		}
 	}
 })
@@ -327,6 +329,42 @@ let timer = {
 		}
 	}
 }
+
+window.addEventListener("resize", e => {
+
+	let t = timer
+	if (window.innerWidth < 760) {
+		t.offhandTimer = document.querySelector(".mobile-footer #offhand-timer-clock")
+		t.offhandMin = document.querySelector(".mobile-footer #offhand-minutes")
+		t.offhandSec = document.querySelector(".mobile-footer #offhand-seconds")
+		t.offhandNextRound = document.querySelector(".mobile-footer #offhand-next-rounds")
+		t.loadingBar = document.querySelector(".mobile-loading #loading-bar")
+		t.loadingBarText = document.querySelector(".mobile-loading #loading-bar p")
+		t.loadingInner = document.querySelector(".mobile-loading #loading-inner")
+		infoPanel.panel.childNodes.forEach(e => {
+			if (e.tagName == "P") {
+				let name = e.innerHTML.split(" ")[0]
+				if (e.classList.contains("info")) {e.innerHTML = name}
+			}
+			
+		})
+	} else {
+		t.offhandTimer = document.querySelector("#offhand-timer-clock")
+		t.offhandMin = document.querySelector("#offhand-minutes")
+		t.offhandSec = document.querySelector("#offhand-seconds")
+		t.offhandNextRound = document.querySelector("#offhand-next-rounds")
+		t.loadingBar = document.querySelector(".mobile-loading #loading-bar")
+		t.loadingBarText = document.querySelector(".mobile-loading #loading-bar p")
+		t.loadingInner = document.querySelector(".mobile-loading #loading-inner")
+		infoPanel.panel.childNodes.forEach(e => {
+			if (e.tagName == "P") {
+				let name = e.innerHTML.split(" ")[0]
+				if (e.classList.contains("info")) {e.innerHTML = `${name} &#9658;`}
+			}
+			
+		})
+	}
+})
 
 timer.startButton.addEventListener("click", timer.startUpMethod)
 
@@ -435,6 +473,15 @@ function insertChampions() {
 	console.log(championsCount + " total champions")
 }
 
+function removeChampGrid() {
+	let grid = playerSection.overlay.champGrid
+	grid.innerHTML = ``
+	grid.dataset.state = "closed"
+	grid.classList.remove("margin-top-bottom")
+	playerSection.overlay.champGridBtn.classList.remove("grid-btn--avalible")
+	playerSection.overlay.champGridBtn.innerHTML = `open dropdown`
+}
+
 function chooseThisChamp(e) {
 	if (e.target.tagName == "IMG") {
 		playerSection.overlay.userInputs.img = e.target
@@ -476,7 +523,7 @@ function createNewPlayer() {
 					<span>"${champions[this.championID].name}"</span><br>
 					total: <span>${this.totalShots} s /&nbsp;${Math.round(((this.totalAmount) * 100) / 100) / 1000}&nbsp;l</span><br>
 					blood alc.: <span>${Math.round(this.BAC * 1000) / 1000}&nbsp;&percnt;</span><br>
-					in queue: <span  style="color: ${this.queue ? "red" : "black"}">${this.queue} shot${this.queue == 1 ? "" : "s"}</span><br>
+					queue: <span  style="color: ${this.queue ? "red" : "black"}">${this.queue} shot${this.queue == 1 ? "" : "s"}</span><br>
 					</p>
 				</div>`
 		},
@@ -542,8 +589,6 @@ function removeObligation(playerDOM) {
 
 
 
-
-
 function clearNewCharacterViewAndInputs() {
 	let inputs = playerSection.overlay.userInputs
 	let view = playerSection.overlay.characterView
@@ -576,14 +621,6 @@ function updateNewCharacterView() {
 	view.favBeer.innerHTML = `${inputs.favBeer.value}`
 }
 
-function removeChampGrid() {
-	let grid = playerSection.overlay.champGrid
-	grid.innerHTML = ``
-	grid.dataset.state = "closed"
-	grid.classList.remove("margin-top-bottom")
-	playerSection.overlay.champGridBtn.classList.remove("grid-btn--avalible")
-	playerSection.overlay.champGridBtn.innerHTML = `open dropdown`
-}
 
 function updatePlayers() {
 	playerSection.playerList.innerHTML = `<div id="add-player" onclick="openPlayerOverlay()"><img src="IMG/plus.svg" title="Add new player!">`
@@ -785,3 +822,12 @@ function checkForDivision(number, divider) {
 
 
 
+// things to definetly write after all the declarations
+if (window.innerWidth < 760) {
+	infoPanel.panel.childNodes.forEach(e => {
+		if (e.tagName == "P") {
+			let name = e.innerHTML.split(" ")[0]
+			if (e.classList.contains("info")) {e.innerHTML = name}
+		}
+	}
+)}

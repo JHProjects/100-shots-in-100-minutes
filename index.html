@@ -7,7 +7,7 @@
 	<meta name="description" content="Lick my ass, I'll push some gas.">
 	<meta name="keywords" content="Drinking game, Drunkbois, 100 shots per 100 minutes, beer game">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>100 / 100 GAME (v.0.10 alpha)</title>
+	<title>100 / 100 GAME (v.0.12 alpha)</title>
 	<link rel="icon" href="./icon.png">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" href="https://use.typekit.net/wwh7vhw.css">
@@ -22,12 +22,16 @@
 				<img src="./IMG/logo/logo_pixelated.png" alt="logo-pixel">
 			</div>
 
-			<div id="title">
+			<div class="mobile-title">
+				<h1 class="uppercase black"><span class="red italic black">100</span> Shots in <br><span class="blue italic black">100</span> mins .com</h1>
+			</div>
+
+			<div id="title" class="title">
 				<h1 class="uppercase black"><span class="red italic black">100</span> panáků za <span class="blue italic black">100</span> minut .com</h1>
 				<h3 class="uppercase">by <a class="link" target="_blank" href="https://www.instagram.com/drunkboiiis/">drunkbois</a></h3>
 			</div>
 
-			<div id="offhand-timer" class="">
+			<div id="offhand-timer" class="desktop-offhand-timer">
 				<p id="offhand-timer-clock" class=""><span id="offhand-minutes" class="offhand-timer-numbers">00</span>:<span id="offhand-seconds" class="offhand-timer-numbers">00</span></p>
 				<p class="italic spacing-0-03">> <span id="offhand-next-rounds">0</span></p>
 			</div>
@@ -43,7 +47,7 @@
 			<p class="info about">About &#9658;</p>
 			<p class="content hide">100/100 Game <br>ver. 0.1 alpha<br>A simple drinking game, far supperior than your usual timer on your phone. The main functions are: Visual indications & group and personal statistics. This web application is made with stock JavaScript and CSS. It does not have any backend database (if you refresh, every data will be erased). <br></p>
 
-			<p class="info how-to">How-To-Use &#9658;</p>
+			<p class="info how-to">How-To-Play &#9658;</p>
 			<p class="content hide">Because there are still many bugs, you should follow theese instructions to avoid any softlocks and errors.
 			0. Never reload page unless you want to delete all progress.
 			1. Set up all your players before starting the timer.
@@ -55,7 +59,7 @@
 			<p class="info rules">Rules &#9658;</p>
 			<p class="content hide">If you don't get the rules you REALLY shouldn't play this game... You are either very underage or just rertarded (and in any case alcohol isn't very good for you). <br>—<br>Anyhow... It's really simple: Every 60 seconds you pour yourself a shot of (any) beer (20–60 ml) and gulp it down just as 59 changes to 0. The official challange is to get to 100 minutes (1h and 40min). If you want to destroy yourself, you can push even further. <br></p>
 
-			<p class="info">Drunkbois &#9658;</p>
+			<p class="info">DB &#9658;</p>
 			<p class="content hide">Drunkbois is a organization of people with similar interests and idealogies (otherwise known as "friends"). Started as a small group of a 4 elementary school friends. Over time, as they met more and more people, they recruited some of The chosen ones to the group. At this poin the organization is so fed up with alcohol, that it has to come up with retarded games to somehow force themself into drinking (it's our job).<br></p>
 
 			<p class="info" id="fyi">fyi &#9658;</p>
@@ -153,6 +157,16 @@
 							 	<option value="Svijany">Svijany</option>
 							 	<option value="Argus">Argus</option>
 							 	<option value="Chotěboř">Chotěboř</option>
+							 	<option value="Kozel">Kozel</option>
+							 	<option value="Plzeň">Plzeň</option>
+							 	<option value="Budvar">Budvar</option>
+							 	<option value="Březňák">Březňák</option>
+							 	<option value="Platan">Platan</option>
+							 	<option value="Staročech">Staročech</option>
+							 	<option value="Radegast">Radegast</option>
+							 	<option value="Gambrinus">Gambrinus</option>
+							 	<option value="Krušovice">Krušovice</option>
+							 	<option value="Starobrno">Starobrno</option>
 							</select>
 							</span>
 						</div>
@@ -188,6 +202,21 @@
 		<footer>
 			<p>© 2021 / Created by Jan Holeček</p>
 			<p>hosted by GitHub Pages</p>
+
+			<div class="mobile-footer">
+
+				<div id="offhand-timer" class="mobile-timer">
+					<p id="offhand-timer-clock" class=""><span id="offhand-minutes" class="offhand-timer-numbers">00</span>:<span id="offhand-seconds" class="offhand-timer-numbers">00</span></p>
+					<p class="italic spacing-0-03">> <span id="offhand-next-rounds">0</span></p>
+				</div>
+
+				<div class="moblie-loading">
+					<div id="loading-bar" class="loading-bar">
+					<div id="loading-inner" class="loading-inner"></div>
+					<p class="loading-bar-text">Stopped</p>
+					</div>
+				</div>
+			</div>
 		</footer>
 
 
