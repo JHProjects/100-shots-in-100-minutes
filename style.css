@@ -387,7 +387,8 @@ span#milliseconds  {
 	transform: scale(1.12);
 }
 
-.add-obligation {
+.player-control button  {
+	margin: 0;
 	border: none;
 	flex-grow: 1;
 	border: 1px solid black;
@@ -809,7 +810,7 @@ footer {
 
 
 /* || MEDIA QUERIES || */
-@media only screen and (max-width: 760px) {
+@media only screen and (max-width: 760px), (max-height: 480px) {
 	/* header */
 	header {
 		justify-items: start;
@@ -993,7 +994,6 @@ footer {
 
 	.inputs {
 		display: flex;
-		justify-items: space-between;
 		gap: .1rem .4rem;
 		flex-wrap: wrap;
 	}

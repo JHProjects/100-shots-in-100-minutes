@@ -456,8 +456,10 @@ function chooseThisChamp(e) {
 }
 
 function createNewPlayer() {
+	if (playerSection.overlay.userInputs.img.dataset == undefined) {alert("Bro, you need to choose one of the champions... You gotta have some face to represent yourself.")}
 	let inputs = playerSection.overlay.userInputs
 	let championIndex = playerSection.overlay.userInputs.img.dataset.index
+
 
 	let newPlayer = {
 		name: inputs.name.value,
@@ -479,7 +481,8 @@ function createNewPlayer() {
 			this.element = `
 				<div class="player" id="player" data-index="${this.playerArrayIndex}">
 					<div class="player-control">
-						<button class="add-obligation" onclick="addObligation(this.parentNode.parentNode)" title="Add 1 missed shot">+1 queue</button>
+						<button onclick="removeObligation(this.parentNode.parentNode)" title="Remove 1 missed shot">-1</button>
+						<button class="add-obligation" onclick="addObligation(this.parentNode.parentNode)" title="Add 1 missed shot">+1 que</button>
 						<img src="IMG/x-symbol.svg" class="delete-player" onclick="removePlayer(this.parentNode.parentNode)" title="Click to remove '${this.name}'">
 					</div>
 					<img src="${champions[this.championID].avatarURL}" title="${this.name}" alt="${champions[this.championID].name}">
@@ -488,7 +491,8 @@ function createNewPlayer() {
 					<span>"${champions[this.championID].name}"</span><br>
 					total: <span>${this.totalShots} s /&nbsp;${Math.round(((this.totalAmount) * 100) / 100) / 1000}&nbsp;l</span><br>
 					blood alc.: <span>${Math.round(this.BAC * 1000) / 1000}&nbsp;&percnt;</span><br>
-					queue: <span  style="color: ${this.queue ? "red" : "black"}">${this.queue} shot${this.queue == 1 ? "" : "s"}</span><br>
+					queue: <span  style="color: ${this.queue ? "red" : "black"}">${this.queue} shot${this.queue == 1 ? "" : "s"}</span>
+					<br>
 					</p>
 				</div>`
 		},
@@ -519,7 +523,7 @@ function removePlayer(playerDOM) {
 	
 	playerDOM.parentNode.childNodes.forEach(x => {
 		if (x.dataset) {
-			if (x.dataset.index > id + 3) {x.dataset.index -= 1}
+			if (x.dataset.index > id + 3) x.dataset.index -= 1
 		}
 	})
 	console.log(`removed player: #${id}`)
@@ -541,15 +545,15 @@ function addObligation(playerDOM) {
 }
 
 function removeObligation(playerDOM) {
-	// Work in progress
 	let id = playerDOM.dataset.index
 
 	playerDOM.remove()
-	players[id].queue += 1
+	players[id].queue -= 1
 	players[id].updateHTML()
 	players[id].pasteHTML()
-	console.log(`adding 1 missed shot to player #${id}`)
+	console.log(`removing 1 missed shot from player #${id}`)
 	console.log(players[id])
+	if (players[id].queue < 1) alert(`player #${id}, '${players[id].name}' has negative amout of 'shots in queue'. If by mistake, please set the 'in queue' to the right amount. Else... Don't drink next rount and set the right amount aswell.`)	
 }
 
 
@@ -795,6 +799,7 @@ function mobileVersionChange(e) {
 		t.loadingBar = document.querySelector("#loading-bar-mobile")
 		t.loadingBarText = document.querySelector("#loading-bar-text-mobile")
 		t.loadingInner = document.querySelector("#loading-inner-mobile")
+		t.currentRound = document.querySelector("#current-round-mobile")
 		infoPanel.panel.childNodes.forEach(e => {
 			if (e.tagName == "P") {
 				let name = e.innerHTML.split(" ")[0]
@@ -810,6 +815,7 @@ function mobileVersionChange(e) {
 		t.loadingBar = document.querySelector("#loading-bar")
 		t.loadingBarText = document.querySelector("#loading-bar p")
 		t.loadingInner = document.querySelector("#loading-inner")
+		t.currentRound = document.querySelector("#current-round-big")
 		infoPanel.panel.childNodes.forEach(e => {
 			if (e.tagName == "P") {
 				let name = e.innerHTML.split(" ")[0]
