@@ -493,7 +493,7 @@ function createNewPlayer() {
 				</div>`
 		},
 		pasteHTML: function() {
-			playerSection.playerList.insertAdjacentHTML("beforeend", this.element)
+			playerSection.playerList.insertAdjacentHTML("afterbegin", this.element)
 		},
 		deleteSelf: function() {
 			this.remove()

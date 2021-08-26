@@ -340,7 +340,7 @@ span#milliseconds  {
 
 	gap: 11px;
 	align-items: flex-end;
-	flex-direction: row-reverse;
+	flex-direction: row;
 }
 
 #players > div {
@@ -841,6 +841,7 @@ footer {
 		display: flex;	
 		flex-direction: column;
 		gap: .5rem;
+		min-height: calc(95vh - 20vw);
 	}
 
 	.sidebar-left--info {
@@ -944,31 +945,49 @@ footer {
 
 	#players {
 		order: 5;
-		min-height: min(max(170px, 18vw), 21vh);
+		align-items: start;
+		min-height: min(max(160px, 17vw), 20vh);
+		height: auto;
 		display: flex;
-		gap: 6rem .55rem;
+		gap: 1rem .55rem;
 		justify-content: center;
 		flex-wrap: wrap;
 		width: 100%;
-		margin-bottom: 20rem;
+		margin-bottom: 5rem;
+		margin-top: 1.5rem;
 	}
 
 	#players div {
-		max-width: 120px;
+		max-width: 115px;
 		min-width: 95px;
 		flex: 1;
 	}
 
-	.player {
+	#add-player {
+		margin-top: 1.85rem;
 	}
 
+	
 	.description {
-		width: 100%;
+		position: relative;
+		width: auto;
+		font-size: clamp(.9rem, 4vw, 1rem)
 	}
 
 	.player-control > * {
 		letter-spacing: 0;
 	}
+
+	.mobile-buffer {
+		position: relative;
+		bottom: 0;
+		order: 6;
+		border: 1px solid red;
+		background: pink;
+		height: clamp(2rem, 5vw, 4rem);
+		width: 100%;
+	}
+
 
 	#loading {display: none;}
 
@@ -995,14 +1014,9 @@ footer {
 		gap: .5rem;
 	}
 
-	.mobile-buffer {
-		background: pink;
-		display: block;
-		height: clamp(1rem, 4vw, 3rem);
-		width: 100%;
-	}
 
 	footer > p {
+		padding-top: .5rem;
 		display: none;
 		font-size: 1rem;
 	}
