@@ -918,7 +918,7 @@ footer {
 
 	#main-timer span {
 		font-size: clamp(2rem, 32vw, 12rem);
-		
+		overflow: hidden;
 	}
 
 	#main-timer span#milliseconds {
