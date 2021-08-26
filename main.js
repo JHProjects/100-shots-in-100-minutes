@@ -553,7 +553,7 @@ function removeObligation(playerDOM) {
 	players[id].pasteHTML()
 	console.log(`removing 1 missed shot from player #${id}`)
 	console.log(players[id])
-	if (players[id].queue < 1) alert(`player #${id}, '${players[id].name}' has negative amout of 'shots in queue'. If by mistake, please set the 'in queue' to the right amount. Else... Don't drink next rount and set the right amount aswell.`)	
+	if (players[id].queue < 0) alert(`player #${id}, '${players[id].name}' has negative amout of 'shots in queue'. If by mistake, please set the 'in queue' to the right amount. Else... Don't drink next rount and set the right amount aswell.`)	
 }
 
 
