@@ -920,7 +920,7 @@ footer {
 		min-height: 10vh;
 		max-height: 200px;
 		display: flex;
-		align-items: end;
+		align-items: flex-end;
 	}
 
 	#main-timer p {
