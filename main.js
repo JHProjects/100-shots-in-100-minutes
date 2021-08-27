@@ -275,6 +275,9 @@ let timer = {
 	h: 0,
 	overallMinutes: 0,
 
+	// definition of timer second speed in milliseconds
+	speed: 1000,
+
 	// Selectors in the DOM
 	UI: document.getElementById("main-timer"),
 	UImin: document.querySelector("#minutes"),
@@ -339,9 +342,11 @@ let totalStats = {
 	beerAll: 0,
 	beerPerPerson: 0,
 	compile: function() {
+		this.shotsAll = 0
+		this.beerAll = 0
 		for (let i = 0; i < players.length; i++) {
-			this.beerAll += players[i].totalAmount / 500
 			this.shotsAll += players[i].totalShots
+			this.beerAll += players[i].totalAmount / 500
 		}
 		this.beerPerPerson = totalStats.beerAll / players.length
 		console.log(this)
@@ -608,8 +613,8 @@ function updatePlayer(p, i) {
 	// Here's the formula to count the level of alcohol in blood
 	p.totalGramsConsumed = ((p.totalAmount / 100) * p.alc) * .789
 	p.totalBAC = (p.totalGramsConsumed / ((p.weight * 1000) * p.genderIndex)) * 100
-	// here im showing 80% of the "real" BAC, because the Widmark Formula tends to overestimate
-	p.BAC = ((p.totalBAC - ((timer.min / 60) * .015)) / 5) * 4
+	// here im showing 75% of the "real" BAC, because the Widmark Formula tends to overestimate
+	p.BAC = ((p.totalBAC - ((timer.min / 60) * .015)) / 4) * 3
 	
 	p.updateHTML()
 	p.pasteHTML()
@@ -687,7 +692,7 @@ function changeTimer(e) {
 		// Update the group stats
 		if (timer.sec == 0) totalStats.compile()
 		if (timer.sec == 1) timer.totalShotsAll.innerHTML = `${totalStats.shotsAll}!`
-		if (timer.sec == 1) timer.totalBeerAll.innerHTML = `${Math.round(totalStats.beerPerPerson * 100) / 100}&nbsp;/&nbsp;${(totalStats.beerAll)}!`
+		if (timer.sec == 1) timer.totalBeerAll.innerHTML = `${Math.round(totalStats.beerPerPerson * 100) / 100}&nbsp;/&nbsp;${Math.round(totalStats.beerAll * 100) / 100}!`
 	}
 } 
 
@@ -769,8 +774,9 @@ function resetEvent() {
 
 function timerStart() {
 	changeTimer()
-	timer.timerInterval = setInterval(updateTimer, 1000)
-	timer.timerMilliseconds = setInterval(millisecondsTimer, 10)
+	timer.milsecSpeed = timer.speed / 100
+	timer.timerInterval = setInterval(updateTimer, timer.speed)
+	timer.timerMilliseconds = setInterval(millisecondsTimer, timer.milsecSpeed)
 	timer.isTimerRunning = true
 	console.log(theConsoleMotivator.cheerUp)
 } 
@@ -778,6 +784,15 @@ function timerStart() {
 function emergencyStop() {
 	clearInterval(timer.timerInterval)
 	clearInterval(timer.timerMilliseconds)
+} 
+
+function selfHarmFunction() {
+	timer.speed /= 2
+	document.querySelector("#hardcore-background").classList.add("hardcore-background-visible")
+	document.querySelector("#logo img:last-child").src = `IMG/logo/logo_pixelated_aplha.png`
+	document.querySelector("header").style.background = `rgba(0,0,0,0)`
+	document.querySelector(".mobile-footer").style.background = `rgba(0,0,0,0)`
+	alert(`Congratulations!! The timer speed is now reduced by 50 % -> one tick per ${timer.speed} ms`)
 } 
 
 
