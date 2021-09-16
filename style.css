@@ -4,7 +4,8 @@
 }
 
 
-/*	=================
+/*	///////////////////////////////////////////////////////////////////
+	=================
 	table of contents
 	=================
 	1. Global Attributes
@@ -13,14 +14,22 @@
 		3.1. Left sidebar Content
 		3.2. Right Sidebar Content
 		3.3. Main Timer
-	4.  
-*/
+		3.4. Loading Area
+		3.5. Statistic area
+		3.6. Button Area
+		3.7. Player Area
+	4. Overlays
+		4.1. Choose Player Overlay
+		4.2. Hardcore Background "overlay"
+		4.3. Countdown Overlay 
+	5. Footer Area
+	...
+
+*/	///////////////////////////////////////////////////////////////////
 
 
 
-html {
-
-}
+html {}
 
 * {
 	font-family: aktiv-grotesk, Arial, sans-serif;
