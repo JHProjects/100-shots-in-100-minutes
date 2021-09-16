@@ -4,6 +4,19 @@
 }
 
 
+/*	=================
+	table of contents
+	=================
+	1. Global Attributes
+	2. Header Area
+	3. Main Area
+		3.1. Left sidebar Content
+		3.2. Right Sidebar Content
+		3.3. Main Timer
+	4.  
+*/
+
+
 
 html {
 
@@ -212,6 +225,7 @@ p.language {
 	margin-bottom: min(max(1px, 0.2vw), 7px);
 
 	transition: 0.3s;
+	cursor: default;
 }
 
 #main-timer span {
@@ -687,6 +701,38 @@ span#milliseconds  {
 }
 
 
+/* Countdown Overlay */
+.countdown-overlay {
+	display: none;
+	z-index: 3;
+	-webkit-backdrop-filter: blur(32px);
+	backdrop-filter: blur(32px);
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transition: .3s;
+}
+.countdown-overlay---visible {
+	display: flex;
+	visibility: visible;
+	opacity: 1;
+}
+
+.countdown-overlay p {
+	letter-spacing: -.08em;
+	position: relative;
+	font-weight: 1000;
+	font-style: italic;
+	font-size: clamp(3rem, 50vw + 1rem, 75rem);
+	text-shadow: 0px 0px calc(5vw + 1rem) #FFF;
+	transform: translate(-100vw, -1rem);
+}
+
+.countdown-overlay--number-anim {
+	animation: countdown-swipe 1s cubic-bezier(0.0, 0.7, 0.5, 0.1) 1s infinite;
+}
+
+
 
 /* || FOOTER AREA || */
 .mobile-buffer {
@@ -756,6 +802,11 @@ footer {
 
 
 /* keyframes */
+@keyframes countdown-swipe {
+	from {transform: translate(-100vw)}
+	to {transform: translate(100vw)}
+}
+
 @keyframes size-up {
 	from {transform: scale(1)}
 	to {transform: scale(2)}
@@ -924,6 +975,7 @@ footer {
 	}
 
 	#main-timer p {
+		
 		margin: 0;
 	}
 
@@ -1064,5 +1116,9 @@ footer {
 
 	.mobile-loading, .loading-bar {
 		width: auto;
+	}
+
+	.countdown-overlay p {
+		font-size: clamp(10rem, 80vw + 2rem, 50rem);	
 	}
 }

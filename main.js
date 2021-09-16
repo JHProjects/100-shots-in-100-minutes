@@ -316,7 +316,7 @@ let timer = {
 			// If The timer is not running, START IT UP BABY!
 			timerStart()
 
-			timer.startButton.removeEventListener("click", timer.startUpMethod)
+			timer.startButton.removeEventListener("click", startCountdown)
 
 			timer.startButton.innerHTML = `reset`
 			timer.startButton.classList.remove("start-button--avalible")
@@ -333,8 +333,54 @@ let timer = {
 	}
 }
 
+
+let countdown = {
+	overlay: document.querySelector(".countdown-overlay"),
+	number: document.querySelector(".countdown-overlay p"),
+	amount: 3,
+	countdown: function() {
+		countdown.countdownInterval = setInterval(() => {
+			if (this.amount == 1) {
+				clearInterval(countdown.countdownInterval)
+				setTimeout(() => this.number.innerHTML = `GO!`, 1000)
+				setTimeout(() => finishCountdown(), 2000)
+			}
+			this.number.innerHTML = this.amount
+			this.amount--
+		}, 1000)	
+	}
+}
+
+timer.startButton.addEventListener("click", startCountdown)
+function startCountdown() {
+	countdown.overlay.classList.add("countdown-overlay---visible")
+	countdown.number.classList.add("countdown-overlay--number-anim")
+	countdown.countdown();	
+}
+
+function finishCountdown() {
+	removeCountdownOverlay()
+	timer.startUpMethod()
+}
+
+function cancelCountdown() {
+	if (countdown.amount >= 1) {
+		clearInterval(countdown.countdownInterval)
+		removeCountdownOverlay()	
+	} else {
+		console.error("too late to cancel friend :)")
+	}
+}
+
+function removeCountdownOverlay() {
+	countdown.overlay.classList.remove("countdown-overlay---visible")
+	countdown.amount = 3
+	countdown.number.innerHTML = ""
+}
+
+
 window.addEventListener("resize", e => mobileVersionChange(e))
-timer.startButton.addEventListener("click", timer.startUpMethod)
+
 
 // total stats for all
 let totalStats = {
@@ -760,7 +806,7 @@ function resetEvent() {
 	timer.startButton.innerHTML = `start`
 	timer.startButton.classList.remove("start-button--active")
 	timer.startButton.classList.add("start-button--avalible")
-	timer.startButton.addEventListener("click", timer.startUpMethod)
+	timer.startButton.addEventListener("click", startCountdown)
 
 	timer.stopButton.innerHTML = `emergency stop!`
 	timer.stopButton.classList.remove("stop-button--active")
@@ -788,6 +834,7 @@ function emergencyStop() {
 
 function selfHarmFunction() {
 	timer.speed /= 2
+	document.querySelector("*").style.textShadow = `0 0 35px #FFF`
 	document.querySelector("#hardcore-background").classList.add("hardcore-background-visible")
 	document.querySelector("#logo img:last-child").src = `IMG/logo/logo_pixelated_aplha.png`
 	document.querySelector("header").style.background = `rgba(0,0,0,0)`

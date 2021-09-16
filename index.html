@@ -132,6 +132,7 @@
 			
 		</section>
 
+		<!-- || Audio || -->
 		<section class="audio-section">
 			<audio autoplay class="audio">
 				
@@ -139,6 +140,7 @@
 			</audio>
 		</section>
 
+		<!-- || Add-player overlay || -->
 		<div class="overlay-container" id="overlay-container">
 			<div class="choose" id="choose" onclick="updateNewCharacterView()">
 				<div class="close-button" id="close-overlay-btn" onclick="closeOverlay()">
@@ -213,11 +215,18 @@
 			</div>
 		</div>
 
+		<!-- || Countdown overlay || -->
+		<div class="overlay-container countdown-overlay" onclick="cancelCountdown()">
+			<p class="countdown-number"></p>	
+			<!-- <button class="stop-countdown--btn">stop</button> -->		
+		</div>
+
+
 		<div id="hardcore-background" class="hardcore-background"></div>
 		
 		<!-- || Footer area || -->
 		<footer>
-			<p>© 2021 / Created by Jan Holeček</p>
+			<p>© 2021 / Created by Jan Holeček / Font: Aktiv Grotesk</p>
 			<p>hosted by GitHub Pages</p>
 
 			<div class="mobile-footer">
