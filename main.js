@@ -261,7 +261,6 @@ let theConsoleMotivator = {
 // Audio code
 let audio = document.querySelector(".audio")
 audio.muted = false
-console.log(audio)
 
 
 // Timer Code
@@ -276,7 +275,7 @@ let timer = {
 	overallMinutes: 0,
 
 	// definition of timer second speed in milliseconds
-	speed: 1000,
+	speed: 250,
 
 	// Selectors in the DOM
 	UI: document.getElementById("main-timer"),
@@ -305,6 +304,8 @@ let timer = {
 	totalBeerAll: document.querySelector("#beer-drank span"),
 	totalShotsAll: document.querySelector("#shots-drank span"),
 
+	audio: document.querySelector(".audio"),
+
 	// Timer method and boolean logic
 	isTimerRunning: false,
 	startUpMethod: function startTheFuckingBeerSlaughter() {
@@ -332,7 +333,6 @@ let timer = {
 		}
 	}
 }
-
 
 let countdown = {
 	overlay: document.querySelector(".countdown-overlay"),
@@ -739,8 +739,28 @@ function changeTimer(e) {
 		if (timer.sec == 0) totalStats.compile()
 		if (timer.sec == 1) timer.totalShotsAll.innerHTML = `${totalStats.shotsAll}!`
 		if (timer.sec == 1) timer.totalBeerAll.innerHTML = `${Math.round(totalStats.beerPerPerson * 100) / 100}&nbsp;/&nbsp;${Math.round(totalStats.beerAll * 100) / 100}!`
+
+		// Play random audio
+		if (timer.min && timer.sec == 0) {playRandomAudioSample()}
+		if (timer.min == 2 && timer.sec == 0) {
+			audio.innerHTML = ``
+			audio.innerHTML = `<source src="AUDIO/test-audio2.mp3" type="audio/mpeg">`
+			console.log(audio)
+		}
+		
 	}
 } 
+
+let usedAudioIDs = []
+
+function playRandomAudioSample() {
+	let index = Math.floor(Math.random() * /*insert number of audio files*/ 3) + 1
+	while (usedAudioIDs.includes(index)) {
+		index = Math.floor(Math.random() * /*insert number of audio files*/ 3) + 1 
+	}
+	audio.src = `AUDIO/${index}.mp3`
+	usedAudioIDs.push(index)
+}
 
 function stopButtonEvent() {
 	if (!timer.isTimerRunning) {
