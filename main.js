@@ -304,8 +304,6 @@ let timer = {
 	totalBeerAll: document.querySelector("#beer-drank span"),
 	totalShotsAll: document.querySelector("#shots-drank span"),
 
-	audio: document.querySelector(".audio"),
-
 	// Timer method and boolean logic
 	isTimerRunning: false,
 	startUpMethod: function startTheFuckingBeerSlaughter() {
@@ -742,18 +740,15 @@ function changeTimer(e) {
 
 		// Play random audio
 		if (timer.min && timer.sec == 0) {playRandomAudioSample()}
-		if (timer.min == 2 && timer.sec == 0) {
-			audio.innerHTML = ``
-			audio.innerHTML = `<source src="AUDIO/test-audio2.mp3" type="audio/mpeg">`
-			console.log(audio)
-		}
 		
-	}
+		}
 } 
 
+// Here you have to hard-code the number of audio files in the directory.
+let audioAmount = 3 
 let usedAudioIDs = []
-
 function playRandomAudioSample() {
+	if (usedAudioIDs.length >= audioAmount) {usedAudioIDs.length = 0}
 	let index = Math.floor(Math.random() * /*insert number of audio files*/ 3) + 1
 	while (usedAudioIDs.includes(index)) {
 		index = Math.floor(Math.random() * /*insert number of audio files*/ 3) + 1 

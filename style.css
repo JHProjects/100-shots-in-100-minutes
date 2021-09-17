@@ -1,12 +1,12 @@
 :root {
-	--button-f-size: min(max(14px, 0.9vw), 20px);
+	--button-f-size: min(max(14px, 1.1vw), 25px);
 	--button-f-scale-up: calc(var(--button-f-size) * 1.15);
 }
 
 
 /*	///////////////////////////////////////////////////////////////////
 	=================
-	table of contents
+	Table of contents
 	=================
 	1. Global Attributes
 	2. Header Area
