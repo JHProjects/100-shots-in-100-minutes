@@ -359,6 +359,7 @@ function startCountdown() {
 function finishCountdown() {
 	removeCountdownOverlay()
 	timer.startUpMethod()
+	audio.src = `AUDIO/start.mp3`
 }
 
 function cancelCountdown() {
@@ -739,7 +740,6 @@ function changeTimer(e) {
 		if (timer.sec == 1) timer.totalBeerAll.innerHTML = `${Math.round(totalStats.beerPerPerson * 100) / 100}&nbsp;/&nbsp;${Math.round(totalStats.beerAll * 100) / 100}!`
 
 		// Play random audio
-		if (!timer.min && timer.sec == 0) {audio.src = `AUDIO/gong.mp3`}
 		if (timer.min && Number.isInteger(timer.min / 10) && timer.sec == 0) {console.log("10 minutes passed")}
 		if (timer.min && timer.sec == 0) {playRandomAudioSample()}
 		
@@ -747,7 +747,7 @@ function changeTimer(e) {
 } 
 
 // Here you have to hard-code the number of audio files in the directory.
-let audioAmount = 101 
+let audioAmount = 111 
 let usedAudioIDs = []
 function playRandomAudioSample() {
 	if (usedAudioIDs.length >= audioAmount) {usedAudioIDs.length = 0}
@@ -755,6 +755,7 @@ function playRandomAudioSample() {
 	while (usedAudioIDs.includes(index)) {
 		index = Math.floor(Math.random() * audioAmount) + 1 
 	}
+	if (timer.min == 100) {index = 86}
 	audio.src = `AUDIO/${index}.mp3`
 	usedAudioIDs.push(index)
 }
