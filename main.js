@@ -270,12 +270,12 @@ let timer = {
 	// definition of inner values
 	milsec: 0,
 	sec: 0,
-	min: 0,
+	min: 99,
 	h: 0,
 	overallMinutes: 0,
 
 	// definition of timer second speed in milliseconds
-	speed: 250,
+	speed: 200,
 
 	// Selectors in the DOM
 	UI: document.getElementById("main-timer"),
@@ -393,7 +393,7 @@ let totalStats = {
 			this.shotsAll += players[i].totalShots
 			this.beerAll += players[i].totalAmount / 500
 		}
-		this.beerPerPerson = totalStats.beerAll / players.length
+		this.beerPerPerson =  totalStats.beerAll / players.length || 0
 		console.log(this)
 	}
 }
@@ -668,10 +668,12 @@ function updatePlayer(p, i) {
 
 
 function updateTimer() {
-	// The timer is based on the previous interval so it can resoult in some error.
-	// Especially the longer it goes on, the more it will fuck up.
-	// It's based on seconds not on milliseconds (for more long term accouracy)
-	// The millisecond timer is running on it's own, it's basicaly fake :)
+	/* 
+		The timer is based on the previous interval so it can resoult in some error.
+		Especially the longer it goes on, the more it will fuck up.
+		It's based on seconds not on milliseconds (for more long term accouracy)
+		The millisecond timer is running on it's own, it's basicaly fake :) 
+	*/
 	
 	timer.sec++
 	if (timer.sec >= 60) {
@@ -720,30 +722,61 @@ function changeTimer(e) {
 		// Update the loading bar
 		timer.loadingInner.style.width = `${(100 / 60) * (timer.sec + 1)}%`
 
-		// Add css onto the timer
-		if (timer.sec == 50) timer.UI.classList.add("animation-flash")
-		if (timer.sec == 0)	timer.UI.classList.remove("animation-flash")
-		if (timer.min && timer.sec == 0) timer.UI.classList.add("animation-fade-out-timer")
-		if (timer.min && timer.sec == 2) timer.UI.classList.remove("animation-fade-out-timer")
-		// Add css onto the offhand timer	
-		if (timer.sec == 50) timer.offhandTimer.classList.add("animation-flash")
-		if (timer.sec == 0)	timer.offhandTimer.classList.remove("animation-flash")
-		if (timer.min && timer.sec == 0) timer.offhandTimer.classList.add("animation-fade-out-timer")
-		if (timer.min && timer.sec == 2) timer.offhandTimer.classList.remove("animation-fade-out-timer")
+		// When the timer is 50 seconds
+		if (timer.sec == 50) {
+			timer.UI.classList.add("animation-flash")
+			timer.offhandTimer.classList.add("animation-flash")
+		}
 
-		// Update The Players
-		if (timer.min && timer.sec == 0) {updatePlayers()}
+		// When the timer is 0 seconds
+		if (timer.sec == 0)	{
+			// Remove flashing from big & small timer
+			timer.UI.classList.remove("animation-flash")
+			timer.offhandTimer.classList.remove("animation-flash")
+			// Update group sats
+			totalStats.compile()
+		}
 
-		// Update the group stats
-		if (timer.sec == 0) totalStats.compile()
-		if (timer.sec == 1) timer.totalShotsAll.innerHTML = `${totalStats.shotsAll}!`
-		if (timer.sec == 1) timer.totalBeerAll.innerHTML = `${Math.round(totalStats.beerPerPerson * 100) / 100}&nbsp;/&nbsp;${Math.round(totalStats.beerAll * 100) / 100}!`
+		if (timer.sec == 1) {
+			timer.totalShotsAll.innerHTML = `${totalStats.shotsAll}!`
+			timer.totalBeerAll.innerHTML = `${Math.round(totalStats.beerPerPerson * 100) / 100}&nbsp;/&nbsp;${Math.round(totalStats.beerAll * 100) / 100}!`
+		}
+
+		// When the timer is 0 seconds & more than 1 min
+		if (timer.min && timer.sec == 0) {
+			// Add fadeout for previous animations
+			timer.UI.classList.add("animation-fade-out-timer")
+			timer.offhandTimer.classList.add("animation-fade-out-timer")
+			// Update all players & random audio sample
+			updatePlayers()
+			playRandomAudioSample()
+		}
+
+		// When the timer is 2 seconds & more than 1 min
+		if (timer.min && timer.sec == 2) {
+			// Remove flashing from big & small timer
+			timer.UI.classList.remove("animation-fade-out-timer")
+			timer.offhandTimer.classList.remove("animation-fade-out-timer")
+		}		
 
 		// Play random audio
-		if (timer.min && Number.isInteger(timer.min / 10) && timer.sec == 0) {console.log("10 minutes passed")}
-		if (timer.min && timer.sec == 0) {playRandomAudioSample()}
-		
+		if (
+			timer.min&& timer.sec == 0 
+			&& Number.isInteger(timer.min / 10) 
+			&& !Number.isInteger(timer.min / 100)
+			) {
+				document.querySelector(".pyro").style.display = `initial`
+				setTimeout(e => {document.querySelector(".pyro").style.display = `none`}, 1000)
 		}
+		if (timer.min == 100 && timer.sec == 0) {
+			document.querySelector(".pyro").style.display = `initial`
+			timer.UI.classList.add("animation-rainbow")
+			setTimeout(e => {
+				document.querySelector(".pyro").style.display = `none`
+				timer.UI.classList.remove("animation-rainbow")
+			}, 10000)
+		}
+	}
 } 
 
 // Here you have to hard-code the number of audio files in the directory.
