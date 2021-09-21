@@ -703,7 +703,7 @@ span#milliseconds  {
 
 .hardcore-background {
 	filter: brightness(1.9);
-	background: url("IMG/avatars/41.png"),url("IMG/avatars/22.png");
+	background: url("IMG/avatars/ill.png"),url("IMG/avatars/22.png");
 	background-blend-mode: luminosity;
 	position: absolute;
 	top: 0;
@@ -772,8 +772,6 @@ footer {
 	}
 
 
-
-
 /* prefixes for JS */
 .black {font-weight: 1000;}
 .uppercase {text-transform: uppercase;}
@@ -810,10 +808,10 @@ footer {
 
 .loading-bar-active {border-color: #00F;}
 
-.animation-rainbow {animation: rainbow 2s infinite}
 .animation-flash {animation: flash 10s 1}
 .animation-pulsate {animation: pulsate 1s infinite;}
 .animation-fade-out-timer {animation: fade-out-timer 1.1s ease-out 1}
+.animation-rainbow {animation: rainbow 2s infinite}
 
 
 

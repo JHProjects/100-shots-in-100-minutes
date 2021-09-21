@@ -197,8 +197,18 @@ let champions = [
 		used: false,
 	},
 	{
-		name: "Ilonka <3 <3 <3",
+		name: "BOMBIČ MODRÝ",
 		avatarURL: "IMG/avatars/40.png",
+		used: false,
+	},
+	{
+		name: "BOMBIČ ČERVENÝ",
+		avatarURL: "IMG/avatars/41.png",
+		used: false,
+	},
+	{
+		name: "Ilonka <3 <3 <3",
+		avatarURL: "IMG/avatars/42.png",
 		used: false,
 	},
 ]; let championsCount = champions.length
@@ -269,13 +279,13 @@ let timer = {
 
 	// definition of inner values
 	milsec: 0,
-	sec: 0,
-	min: 99,
+	sec: 50,
+	min: 9,
 	h: 0,
 	overallMinutes: 0,
 
 	// definition of timer second speed in milliseconds
-	speed: 200,
+	speed: 1000,
 
 	// Selectors in the DOM
 	UI: document.getElementById("main-timer"),
@@ -529,13 +539,13 @@ function createNewPlayer() {
 		element: ``,
 		updateHTML: function() {
 			this.element = `
-				<div class="player" id="player" data-index="${this.playerArrayIndex}">
+				<div class="player" id="player" data-index="${this.playerArrayIndex}" title="'${this.name}' aka ${champions[this.championID].name}">
 					<div class="player-control">
 						<button onclick="removeObligation(this.parentNode.parentNode)" title="Remove 1 missed shot">-1</button>
 						<button class="add-obligation" onclick="addObligation(this.parentNode.parentNode)" title="Add 1 missed shot">+1 que</button>
 						<img src="IMG/x-symbol.svg" class="delete-player" onclick="removePlayer(this.parentNode.parentNode)" title="Click to remove '${this.name}'">
 					</div>
-					<img src="${champions[this.championID].avatarURL}" title="${this.name}" alt="${champions[this.championID].name}">
+					<img src="${champions[this.championID].avatarURL}" alt="${champions[this.championID].name}">
 					<p class="description">
 					<span class="player-name">${this.name}</span><br>
 					<span>"${champions[this.championID].name}"</span><br>
