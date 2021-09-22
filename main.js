@@ -207,8 +207,18 @@ let champions = [
 		used: false,
 	},
 	{
-		name: "Ilonka <3 <3 <3",
+		name: "SCP-035",
 		avatarURL: "IMG/avatars/42.png",
+		used: false,
+	},
+	{
+		name: "Man With a Meloun",
+		avatarURL: "IMG/avatars/43.png",
+		used: false,
+	},
+	{
+		name: "Ilonka <3 <3 <3",
+		avatarURL: "IMG/avatars/44.png",
 		used: false,
 	},
 ]; let championsCount = champions.length
