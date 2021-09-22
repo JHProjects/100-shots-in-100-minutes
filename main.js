@@ -279,8 +279,8 @@ let timer = {
 
 	// definition of inner values
 	milsec: 0,
-	sec: 50,
-	min: 9,
+	sec: 0,
+	min: 0,
 	h: 0,
 	overallMinutes: 0,
 
@@ -326,6 +326,7 @@ let timer = {
 			timerStart()
 
 			timer.startButton.removeEventListener("click", startCountdown)
+			timer.UI.removeEventListener("click", startCountdown)
 
 			timer.startButton.innerHTML = `reset`
 			timer.startButton.classList.remove("start-button--avalible")
@@ -360,6 +361,8 @@ let countdown = {
 }
 
 timer.startButton.addEventListener("click", startCountdown)
+timer.UI.addEventListener("click", startCountdown)
+
 function startCountdown() {
 	countdown.overlay.classList.add("countdown-overlay---visible")
 	countdown.number.classList.add("countdown-overlay--number-anim")
@@ -546,7 +549,7 @@ function createNewPlayer() {
 						<img src="IMG/x-symbol.svg" class="delete-player" onclick="removePlayer(this.parentNode.parentNode)" title="Click to remove '${this.name}'">
 					</div>
 					<img src="${champions[this.championID].avatarURL}" alt="${champions[this.championID].name}">
-					<p class="description">
+					<p class="description" title="Alc. by promile: ${Math.round(this.BAC * 1000) / 100} &permil;">
 					<span class="player-name">${this.name}</span><br>
 					<span>"${champions[this.championID].name}"</span><br>
 					total: <span>${this.totalShots} s /&nbsp;${Math.round(((this.totalAmount) * 100) / 100) / 1000}&nbsp;l</span><br>
@@ -868,6 +871,7 @@ function resetEvent() {
 	timer.startButton.classList.remove("start-button--active")
 	timer.startButton.classList.add("start-button--avalible")
 	timer.startButton.addEventListener("click", startCountdown)
+	timer.UI.addEventListener("click", startCountdown)
 
 	timer.stopButton.innerHTML = `emergency stop!`
 	timer.stopButton.classList.remove("stop-button--active")
