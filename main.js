@@ -296,7 +296,7 @@ let timer = {
 	overallMinutes: 0,
 
 	// definition of timer second speed in milliseconds
-	speed: 1000,
+	speed: 500,
 
 	// Selectors in the DOM
 	UI: document.getElementById("main-timer"),
@@ -409,10 +409,11 @@ let totalStats = {
 	shotsAll: 0,
 	beerAll: 0,
 	beerPerPerson: 0,
+	removedPlayersShots: 0,
+	removedPlayersAmount: 0,
 	compile: function() {
 		this.shotsAll = 0
 		this.beerAll = 0
-		let activePlayers = players
 	// 	players.forEach(e => {if (!e.paused) {
 	// 		activePlayers.push(e)
 	// 		console.log("not paused player")
@@ -420,11 +421,13 @@ let totalStats = {
 	// 		pausedPlayers
 	// 	}
 	// })
-		for (let i = 0; i < activePlayers.length; i++) {
-			this.shotsAll += activePlayers[i].totalShots
-			this.beerAll += activePlayers[i].totalAmount / 500
+		for (let i = 0; i < players.length; i++) {
+			this.shotsAll += players[i].totalShots || 0
+			this.beerAll += players[i].totalAmount / 500 || 0
 		}
-		this.beerPerPerson =  totalStats.beerAll / activePlayers.length || 0
+		this.shotsAll += this.removedPlayersShots
+		this.beerAll += this.removedPlayersAmount / 500
+		this.beerPerPerson = this.beerAll / (players.length || 1) || 0
 		console.log(this)
 	}
 }
@@ -621,6 +624,7 @@ function removePlayer(playerDOM) {
 	let id = playerDOM.dataset.index
 	let p = players[id]
 	
+
 	playerDOM.parentNode.childNodes.forEach(x => {
 		if (x.dataset) {
 			if (x.dataset.index > id + 3) x.dataset.index -= 1
@@ -630,6 +634,8 @@ function removePlayer(playerDOM) {
 	playerDOM.remove()
 	players.splice(id, 1)
 	champions[p.championID].used = false
+	totalStats.removedPlayersShots += p.totalShots
+	totalStats.removedPlayersAmount += p.totalAmount
 	console.log(players)
 }
 
@@ -665,7 +671,7 @@ function pausePlayer(playerDOM, btn) {
 
 		// playerDOM.parentNode.childNodes.forEach(x => {
 		// 	if (x.dataset) {
-		// 		if (x.dataset.index > id + 3) x.dataset.index -= 1
+		// 		if (x.dataset.index > id + 3 )x.dataset.index -= 1
 		// 	}
 		// })
 
@@ -821,8 +827,8 @@ function changeTimer(e) {
 			timer.offhandTimer.classList.add("animation-flash")
 		}
 
-		// When the timer is 0 seconds
-		if (timer.sec == 0)	{
+		// When the timer is 1 seconds
+		if (timer.sec == 1)	{
 			// Remove flashing from big & small timer
 			timer.UI.classList.remove("animation-flash")
 			timer.offhandTimer.classList.remove("animation-flash")
@@ -830,7 +836,7 @@ function changeTimer(e) {
 			totalStats.compile()
 		}
 
-		if (timer.sec == 0) {
+		if (timer.sec == 2) {
 			timer.totalShotsAll.innerHTML = `${totalStats.shotsAll}!`
 			timer.totalBeerAll.innerHTML = `${Math.round(totalStats.beerPerPerson * 100) / 100}&nbsp;/&nbsp;${Math.round(totalStats.beerAll * 100) / 100}!`
 		}
