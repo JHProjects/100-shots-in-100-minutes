@@ -382,6 +382,10 @@ span#milliseconds  {
 	transform: scale(1.08);
 }
 
+.player--paused {
+	color: grey;
+}
+
 .player-control {
 	position: relative;
 	margin: 0;
@@ -394,32 +398,66 @@ span#milliseconds  {
 	align-items: center;
 }
 
-.player-control > * {
+.player-control * {
 	cursor: pointer;
 	border-radius: clamp(3px, .2vw, 8px);
-	height: 1.3rem;
-	margin: .23rem 0;
 	transition: 0.4s;
 	text-transform: uppercase;
 	font-style: italic;
 	font-weight: 1000;
 	font-family: aktiv-grotesk-condensed, aktiv-grotesk, sans-serif;
 	letter-spacing: .05em;
-	line-height: initial;
+	line-height: unset;
 }
 
-.player-control > *:hover {
+.player-control *:hover {
 	transform: scale(1.12);
 }
 
+.dropdown-menu {
+	display: flex;
+	flex-direction: column;
+}
+
+.dropdown-menu__btn:hover {
+	color: red;
+	border: none;
+}
+
+.dropdown-menu__items {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 120%;
+	margin-top: .2rem;
+	flex-direction: column;
+	gap: .2rem;
+}
+
+.dropdown-menu__items button {
+	transition: transform .4s;
+	transform: scale(0, 1);
+}
+
+.dropdown-menu__items--visible {
+	display: flex;
+}
+
+.dropdown-menu__items--visible button {
+	transform: scale(1, 1);
+}
+
 .player-control button  {
-	margin: 0;
+	height: 1.2rem;
+	margin: 2px 0;
 	border: none;
 	flex-grow: 1;
 	border: 1px solid black;
 }
 
 .delete-player {
+	width: 17%;
+	margin: 1px;
 	color: #00F;
 	aspect-ratio: 1/1;
 }
@@ -1005,7 +1043,6 @@ footer {
 	}
 
 	#main-timer p {
-		
 		margin: 0;
 	}
 
@@ -1051,8 +1088,9 @@ footer {
 		margin-top: 1.5rem;
 	}
 
-	#players div {
+	#players > div {
 		max-width: 115px;
+		width: auto;
 		min-width: 95px;
 		flex: 1;
 	}
@@ -1061,6 +1099,9 @@ footer {
 		margin-top: 1.85rem;
 	}
 
+	.player {
+		margin-top: .35rem;
+	}
 	
 	.description {
 		position: relative;
@@ -1070,6 +1111,26 @@ footer {
 
 	.player-control > * {
 		letter-spacing: 0;
+	}
+
+	.dropdown-menu {
+		width: 70%;
+	}
+
+	.dropdown-menu__btn {
+		width: 100%;
+	}
+
+	.dropdown-menu__items {
+		gap: .3rem;
+	}
+
+	.dropdown-menu__items button {
+		height: 1.5rem;
+		width: 100%;
+	}
+
+	.delete-player {
 	}
 
 	.mobile-buffer {

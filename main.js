@@ -229,6 +229,7 @@ let players = [
 	// fist it'll be an empty array with no objects
 ]
 
+let pausedPlayers = []
 
 // JSON of all effects
 let bigEffects = [
@@ -295,7 +296,7 @@ let timer = {
 	overallMinutes: 0,
 
 	// definition of timer second speed in milliseconds
-	speed: 1000,
+	speed: 500,
 
 	// Selectors in the DOM
 	UI: document.getElementById("main-timer"),
@@ -403,7 +404,6 @@ function removeCountdownOverlay() {
 
 window.addEventListener("resize", e => mobileVersionChange(e))
 
-
 // total stats for all
 let totalStats = {
 	shotsAll: 0,
@@ -412,11 +412,19 @@ let totalStats = {
 	compile: function() {
 		this.shotsAll = 0
 		this.beerAll = 0
-		for (let i = 0; i < players.length; i++) {
-			this.shotsAll += players[i].totalShots
-			this.beerAll += players[i].totalAmount / 500
+		let activePlayers = players
+	// 	players.forEach(e => {if (!e.paused) {
+	// 		activePlayers.push(e)
+	// 		console.log("not paused player")
+	// 	} else {
+	// 		pausedPlayers
+	// 	}
+	// })
+		for (let i = 0; i < activePlayers.length; i++) {
+			this.shotsAll += activePlayers[i].totalShots
+			this.beerAll += activePlayers[i].totalAmount / 500
 		}
-		this.beerPerPerson =  totalStats.beerAll / players.length || 0
+		this.beerPerPerson =  totalStats.beerAll / activePlayers.length || 0
 		console.log(this)
 	}
 }
@@ -549,15 +557,23 @@ function createNewPlayer() {
 		BAC: 0,
 		alcInBlood: 0,
 		queue: 0,
+		paused: false,
 		element: ``,
 		updateHTML: function() {
 			this.element = `
-				<div class="player" id="player" data-index="${this.playerArrayIndex}" title="'${this.name}' aka ${champions[this.championID].name}">
+				<div class="player ${this.paused ? "player--paused" : ""}" id="player" data-index="${this.playerArrayIndex}" title="'${this.name}' aka ${champions[this.championID].name}">
 					<div class="player-control">
-						<button onclick="removeObligation(this.parentNode.parentNode)" title="Remove 1 missed shot">-1</button>
-						<button class="add-obligation" onclick="addObligation(this.parentNode.parentNode)" title="Add 1 missed shot">+1 que</button>
+						<div class="dropdown-menu">
+							<button class="dropdown-menu__btn" onclick="playerDropdown(this.parentNode)">open ></button>
+							<div class="dropdown-menu__items">
+								<button onclick="removeObligation(this.parentNode.parentNode.parentNode.parentNode)" title="Remove 1 missed shot">-1</button>
+								<button class="add-obligation" onclick="addObligation(this.parentNode.parentNode.parentNode.parentNode)" title="Add 1 missed shot">+1 que</button>
+								<button onclick="pausePlayer(this.parentNode.parentNode.parentNode.parentNode, this)" title="Pause This player">${this.paused ? "play" : "pause"}</button>
+							</div>
+						</div>
 						<img src="IMG/x-symbol.svg" class="delete-player" onclick="removePlayer(this.parentNode.parentNode)" title="Click to remove '${this.name}'">
 					</div>
+					
 					<img src="${champions[this.championID].avatarURL}" alt="${champions[this.championID].name}">
 					<p class="description" title="Alc. by promile: ${Math.round(this.BAC * 1000) / 100} &permil;">
 					<span class="player-name">${this.name}</span><br>
@@ -587,6 +603,17 @@ function createNewPlayer() {
 	closeOverlay()
 	newPlayer.pasteHTML()
 	clearNewCharacterViewAndInputs()
+}
+
+function playerDropdown(menu) {
+	let dropdown = menu.lastElementChild
+	if(dropdown.classList.contains("dropdown-menu__items--visible")) {
+		dropdown.classList.remove("dropdown-menu__items--visible")
+		menu.firstElementChild.innerHTML = `open >`
+	} else {
+		dropdown.classList.add("dropdown-menu__items--visible")
+		menu.firstElementChild.innerHTML = `close <`
+	}
 }
 
 
@@ -629,6 +656,48 @@ function removeObligation(playerDOM) {
 	if (players[id].queue < 0) alert(`Player #${id}, '${players[id].name}' has negative amout of 'shots in queue'. If by mistake, please set the 'in queue' to the right amount. Else... Don't drink next round and set the right amount aswell.`)	
 }
 
+function pausePlayer(playerDOM, btn) {
+	if (btn.innerHTML == "pause") {
+		let id = playerDOM.dataset.index
+		let player = players[id]
+
+		player.paused = true
+
+		// playerDOM.parentNode.childNodes.forEach(x => {
+		// 	if (x.dataset) {
+		// 		if (x.dataset.index > id + 3) x.dataset.index -= 1
+		// 	}
+		// })
+
+
+		// players.splice(id, 1)
+		// playerDOM.dataset.pausedIndex = pausedPlayers.length
+		// pausedPlayers.push(player)
+		
+		playerDOM.style.color = "grey"
+		btn.innerHTML = "play"
+	} else {
+		let id = playerDOM.dataset.index
+		let player = players[id]
+
+		player.paused = false
+
+		// pausedPlayers.splice(pausedID)
+		// players.splice(id, 0, pausedPlayer)
+
+		// playerDOM.parentNode.childNodes.forEach(x => {
+		// 	if (x.dataset) {
+		// 		if (x.dataset.index > id + 3) x.dataset.index += 1
+		// 	}
+		// })
+
+		playerDOM.style.color = "unset"
+		btn.innerHTML = "pause"
+	}
+	
+	// playerDOM. // make grey
+	
+}
 
 
 function clearNewCharacterViewAndInputs() {
@@ -675,15 +744,16 @@ function updatePlayers() {
 }
 
 function updatePlayer(p, i) {
-	p.totalShots++
-	p.totalAmount = p.totalShots * p.amount 
+	if (!p.paused) {
+		p.totalShots++
+		p.totalAmount = p.totalShots * p.amount 
 
-	// Here's the formula to count the level of alcohol in blood
-	p.totalGramsConsumed = ((p.totalAmount / 100) * p.alc) * .789
-	p.totalBAC = (p.totalGramsConsumed / ((p.weight * 1000) * p.genderIndex)) * 100
-	// here im showing 75% of the "real" BAC, because the Widmark Formula tends to overestimate
-	p.BAC = ((p.totalBAC - ((timer.min / 60) * .015)) / 4) * 3
-	
+		// Here's the formula to count the level of alcohol in blood
+		p.totalGramsConsumed = ((p.totalAmount / 100) * p.alc) * .789
+		p.totalBAC = (p.totalGramsConsumed / ((p.weight * 1000) * p.genderIndex)) * 100
+		// here im showing 75% of the "real" BAC, because the Widmark Formula tends to overestimate
+		p.BAC = ((p.totalBAC - ((timer.min / 60) * .015)) / 4) * 3	
+	}
 	p.updateHTML()
 	p.pasteHTML()
 	console.log(p)
@@ -760,7 +830,7 @@ function changeTimer(e) {
 			totalStats.compile()
 		}
 
-		if (timer.sec == 1) {
+		if (timer.sec == 0) {
 			timer.totalShotsAll.innerHTML = `${totalStats.shotsAll}!`
 			timer.totalBeerAll.innerHTML = `${Math.round(totalStats.beerPerPerson * 100) / 100}&nbsp;/&nbsp;${Math.round(totalStats.beerAll * 100) / 100}!`
 		}
