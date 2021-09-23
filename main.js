@@ -296,7 +296,7 @@ let timer = {
 	overallMinutes: 0,
 
 	// definition of timer second speed in milliseconds
-	speed: 500,
+	speed: 1000,
 
 	// Selectors in the DOM
 	UI: document.getElementById("main-timer"),
