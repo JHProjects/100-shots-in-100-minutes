@@ -848,7 +848,7 @@ function changeTimer(e) {
 			timer.offhandTimer.classList.add("animation-fade-out-timer")
 			// Update all players & random audio sample
 			updatePlayers()
-			playRandomAudioSample()
+			// playRandomAudioSample()
 		}
 
 		// When the timer is 2 seconds & more than 1 min
