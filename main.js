@@ -383,7 +383,7 @@ function startCountdown() {
 function finishCountdown() {
 	removeCountdownOverlay()
 	timer.startUpMethod()
-	audio.src = `AUDIO/start.mp3`
+	// audio.src = `AUDIO/start.mp3`
 }
 
 function cancelCountdown() {
